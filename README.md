@@ -7,3 +7,4 @@
 
 Things I tried
 - cloud build trigger
+- gh hosted
