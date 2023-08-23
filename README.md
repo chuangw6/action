@@ -10,3 +10,4 @@ Things I tried
 - gh hosted
 - self-hosted
 - on my vm
+- test
