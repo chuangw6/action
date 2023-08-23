@@ -11,3 +11,4 @@ Things I tried
 - self-hosted
 - on my vm
 - test
+- wow finally
