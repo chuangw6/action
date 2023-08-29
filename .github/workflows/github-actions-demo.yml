@@ -1,7 +1,7 @@
 name: GitHub Actions Demo
 
 env:
-  LATEST_TAG: ghcr.io/chuangw6/hello-world:latest
+  LATEST_TAG: ghcr.io/chuangw6/action:latest
 
 on: [push]
 
