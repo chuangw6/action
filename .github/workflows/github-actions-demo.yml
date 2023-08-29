@@ -1,23 +1,39 @@
 name: GitHub Actions Demo
 
+env:
+  LATEST_TAG: ghcr.io/chuangw6/hello-world:latest
+
 on: [push]
 
 jobs:
   Explore-GitHub-Actions:
     strategy:
       matrix:
-        version: [10, 12, 14]
+        greeting: ["chuang", "frank", "trevor"]
     runs-on: self-hosted
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo ${{ matrix.version }}
-      # - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by my personal machine!"
-      # - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      # - name: Check out repository code
-      #   uses: actions/checkout@v3
-      # - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      # - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      # - name: List files in the repository
-      #   run: |
-      #     ls ${{ github.workspace }}
-      # - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GCE!"
+      - run: echo "Hello ${{ matrix.greeting }} from self-hosted runner"
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  Build-docker-image:
+    runs-on: self-hosted
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ env.LATEST_TAG }}
+
