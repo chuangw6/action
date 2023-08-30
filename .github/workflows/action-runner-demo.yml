@@ -10,7 +10,7 @@ jobs:
     runs-on: self-hosted
     strategy:
       matrix:
-        greeting: ["chuang", "daniel", "trevor"]
+        greeting: ["chuang", "daniel", "david"]
     steps:
       - run: |
           sleep 30
