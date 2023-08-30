@@ -7,27 +7,29 @@ on: [push]
 
 jobs:
   Say-hello:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         greeting: ["chuang", "daniel", "trevor"]
     steps:
-      - run: echo "Hello ${{ matrix.greeting }} from self-hosted runner"
+      - run: |
+          sleep 30
+          echo "Hello ${{ matrix.greeting }} from self-hosted runner"
 
-  Build-docker-image:
-    runs-on: self-hosted
-    steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+  # Build-docker-image:
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v2
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     - name: Login to Docker Hub
+  #       uses: docker/login-action@v2
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v4
-        with:
-          push: true
-          tags: ${{ env.LATEST_TAG }}
+  #     - name: Push to Docker Hub
+  #       uses: docker/build-push-action@v4
+  #       with:
+  #         push: true
+  #         tags: ${{ env.LATEST_TAG }}
